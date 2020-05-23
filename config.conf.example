@@ -1,0 +1,35 @@
+[server]
+#Set the hostname/ip address for the server
+#Defaults for nzrs.begg.digital, which uploads telemetry to chickenlittle.apps.begg.digital
+;server_name=localhost
+
+#HTTPS port for authorisation with the server
+#Defaults to 8080
+;server_https=8000
+
+#Port for the perspective broker connection
+#Defaults to 6923
+;server_port=6923
+
+#Should the server be allowed to manage this device
+#Defaults to no/false.
+#There are limited actions the server can do, see the code/documentation
+;allow_management=yes
+
+[auto_rx]
+#Address of the radiosonde_auto_rx
+#Defaults to http://localhost:5000 which is probably what you want
+;address=http://192.168.1.8:5000
+
+#Path to the radiosonde_auto_rx
+#Defaults to /home/pi/radiosonde_auto_rx, which is correct for radiosonde_auto_rx on a raspberry pi
+;path=/home/pi/radiosonde_auto_rx
+
+#When upgrading radiosonde_auto_rx, restart the auto_rx service
+#Defaults to true, otherwise it won't actually upgrade
+;restart=False
+
+#Set the Telemetry port
+#Might need to be set to use Ozimux and/or cooperate with chasemapper, etc
+#Defaults to 55673
+;telemetry_port=55673

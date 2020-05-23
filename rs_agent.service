@@ -1,0 +1,16 @@
+[Unit]
+Description=Upload telemetry and upgrade radiosonde_auto_rx
+After=syslog.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/rs_agent/rs_agent.py
+Restart=always
+RestartSec=120
+WorkingDirectory=/home/pi/rs_agent/
+User=pi
+SyslogIdentifier=rs_agent
+
+[Install]
+WantedBy=multi-user.target
+
+

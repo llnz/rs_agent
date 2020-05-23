@@ -1,0 +1,9 @@
+.project
+.pydevproject
+*.pyc
+*.pyo
+*.sqlite3
+.env
+
+server.*
+config.conf
