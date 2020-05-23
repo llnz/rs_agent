@@ -10,7 +10,7 @@ First get the software and install the required libraries.
 
     $ sudo apt-get install python3 python3-openssl
     $ git clone https://gitlab.com/llnz/rs_agent.git
-    $ sudo pip install -r requirements.txt
+    $ sudo pip3 install -r requirements.txt
 
 Create a config.conf file, see the settings below. Temporarily, you will need to ask your server admin
 to provide the PEM file to allow access (in future, an access token will be added to the settings). 
