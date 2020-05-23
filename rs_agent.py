@@ -75,20 +75,24 @@ class ManagementInterface(pb.Referenceable):
     
     def remote_ping(self):
         '''Return pong, test connection is alive'''
+        log.info('Received ping remote request')
         return 'Pong'
     
     def remote_get_name(self):
         '''Returns the station's name'''
+        log.info('Received get_name remote request')
         d = treq.get('%s/get_config' % self.config['auto_rx']['address'])
         d.addCallback(treq.json_content).addCallback(lambda jdict: jdict['habitat_uploader_callsign'])
         return d
     
     def remote_get_auto_rx_version(self):
         '''Return the version of radionsonde_auto_rx'''
+        log.info('Received get_auto_rx_version remote request')
         return treq.get('%s/get_version' % self.config['auto_rx']['address']).addCallback(treq.text_content)
     
     def remote_is_tracking(self):
         '''Return true if auto rx is tracking a radiosonde'''
+        log.info('Received is_tracking remote request')
         d = treq.get('%s/get_task_list' % self.config['auto_rx']['address'])
         d.addCallback(treq.json_content).addCallback(any_active_sdr)
         # if any of response dict value is not "Scanning"
@@ -98,6 +102,7 @@ class ManagementInterface(pb.Referenceable):
     @defer.inlineCallbacks
     def remote_update_rs_agent(self):
         '''Update this software'''
+        log.info('Received update_rs_agent remote request')
         
         result_set = []
         cmd_proto = RunCommand()
@@ -118,6 +123,7 @@ class ManagementInterface(pb.Referenceable):
     @defer.inlineCallbacks
     def remote_update_auto_rx(self):
         '''Update the Radiosonde Auto RX software'''
+        log.info('Received update_auto_rx remote request')
         result_set = []
         cmd_proto = RunCommand()
         self.reactor.spawnProcess(cmd_proto, 'git', ['git', 'pull'], path=self.config['auto_rx']['path'])
