@@ -8,8 +8,9 @@ Typically, this would be installed on the raspberry Pi that is running radiosond
 
 First get the software and install the required libraries.
 
-    $ sudo apt-get install python3 python3-openssl
-    $ git clone https://gitlab.com/llnz/rs_agent.git
+    $ sudo apt-get install python3 python3-openssl python3-pip
+    $ git clone https://github.com/llnz/rs_agent.git
+    $ cd rs_agent
     $ sudo pip3 install -r requirements.txt
 
 Create a config.conf file, see the settings below. Temporarily, you will need to ask your server admin
