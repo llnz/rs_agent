@@ -187,9 +187,13 @@ def initial_connection(reactor, config):
         server_iface.callRemote('register_management_interface', ManagementInterface(config, reactor))
         log.info('Registered management interface')
     else:
-        log.info('Not providing management interface')    
+        log.info('Not providing management interface')
+        
+    def keepalive_task():
+        server_iface.callRemote('ping').addTimeout(5, reactor).addErrback(lambda _err: edgeClient.transport.loseConnection())
     
-    
+    l = task.LoopingCall(keepalive_task)
+    l.start(3*60.0) # ping the server every 3 minutes
 
     done = defer.Deferred()
     edgeClient.connectionLost = lambda reason: done.callback(None)
