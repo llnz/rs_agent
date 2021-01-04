@@ -114,7 +114,7 @@ class ManagementInterface(pb.Referenceable):
         
             #This should kill this process and it won't have time to return the result unless it fails
             cmd_proto = RunCommand()
-            self.reactor.spawnProcess(cmd_proto, 'sudo', ['service', 'rs_agent', 'restart'])
+            self.reactor.spawnProcess(cmd_proto, 'sudo', ['sudo', 'service', 'rs_agent', 'restart'])
             res_restart = yield cmd_proto.defered
             result_set.append(res_restart)
         
@@ -127,12 +127,12 @@ class ManagementInterface(pb.Referenceable):
         result_set = []
         
         cmd_proto = RunCommand()
-        self.reactor.spawnProcess(cmd_proto, 'sudo', ['apt-get', 'update'])
+        self.reactor.spawnProcess(cmd_proto, 'sudo', ['sudo', 'apt-get', 'update'])
         res_apt_update = yield cmd_proto.defered
         result_set.append(res_apt_update)
         
         cmd_proto = RunCommand()
-        self.reactor.spawnProcess(cmd_proto, 'sudo ', ['apt-get', 'install', '-y', 'python3', 'python3-numpy',
+        self.reactor.spawnProcess(cmd_proto, 'sudo ', ['sudo', 'apt-get', 'install', '-y', 'python3', 'python3-numpy',
                                                        'python3-setuptools', 'python3-crcmod',
                                                        'python3-requests', 'python3-dateutil',
                                                        'python3-pip', 'python3-flask'])
@@ -147,7 +147,7 @@ class ManagementInterface(pb.Referenceable):
         if res_git[1] != b'Already up to date.\n':
             
             cmd_proto = RunCommand()
-            self.reactor.spawnProcess(cmd_proto, 'sudo', ['pip3', 'install', '-r', 'requirements.txt'],
+            self.reactor.spawnProcess(cmd_proto, 'sudo', ['sudo', 'pip3', 'install', '-r', 'requirements.txt'],
                                       path=os.path.join(self.config['auto_rx']['path'], 'auto_rx'))
             res_pip = yield cmd_proto.defered
             result_set.append(res_pip)
@@ -160,19 +160,19 @@ class ManagementInterface(pb.Referenceable):
             
             #rewrite station.cfg?
             cmd_proto = RunCommand()
-            self.reactor.spawnProcess(cmd_proto, 'sudo', ['cp', 'auto_rx.service', '/etc/systemd/system/'],
+            self.reactor.spawnProcess(cmd_proto, 'sudo', ['sudo', 'cp', 'auto_rx.service', '/etc/systemd/system/'],
                                       path=os.path.join(self.config['auto_rx']['path'], 'auto_rx'))
             res_unit = yield cmd_proto.defered
             result_set.append(res_unit)
             
             if self.config['auto_rx'].getboolean('restart', fallback=True):
                 cmd_proto = RunCommand()
-                self.reactor.spawnProcess(cmd_proto, 'sudo', ['systemctl', 'daemon-reload'])
+                self.reactor.spawnProcess(cmd_proto, 'sudo', ['sudo', 'systemctl', 'daemon-reload'])
                 res_reload = yield cmd_proto.defered
                 result_set.append(res_reload)
                 
                 cmd_proto = RunCommand()
-                self.reactor.spawnProcess(cmd_proto, 'sudo', ['service', 'auto_rx', 'restart'])
+                self.reactor.spawnProcess(cmd_proto, 'sudo', ['sudo', 'service', 'auto_rx', 'restart'])
                 res_restart = yield cmd_proto.defered
                 result_set.append(res_restart)
         
