@@ -155,7 +155,7 @@ class ManagementInterface(pb.Referenceable):
             cmd_proto = RunCommand()
             self.reactor.spawnProcess(cmd_proto, 'bash', ['bash', './build.sh'],
                                       path=os.path.join(self.config['auto_rx']['path'], 'auto_rx'),
-                                      env={'PATH', '/usr/bin:/bin'})
+                                      env={'PATH': '/usr/bin:/bin'})
             res_build = yield cmd_proto.defered
             result_set.append(res_build)
             
@@ -185,7 +185,7 @@ class ManagementInterface(pb.Referenceable):
         cmd_proto = RunCommand()
         self.reactor.spawnProcess(cmd_proto, 'bash', ['bash', './build.sh'],
                                   path=os.path.join(self.config['auto_rx']['path'], 'auto_rx'),
-                                  env={'PATH', '/usr/bin:/bin'})
+                                  env={'PATH': '/usr/bin:/bin'})
         res_build = yield cmd_proto.defered
         return res_build
 
