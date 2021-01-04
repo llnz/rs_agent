@@ -127,6 +127,11 @@ class ManagementInterface(pb.Referenceable):
         result_set = []
         
         cmd_proto = RunCommand()
+        self.reactor.spawnProcess(cmd_proto, 'sudo', ['apt-get', 'update'])
+        res_apt_update = yield cmd_proto.defered
+        result_set.append(res_apt_update)
+        
+        cmd_proto = RunCommand()
         self.reactor.spawnProcess(cmd_proto, 'sudo ', ['apt-get', 'install', '-y', 'python3', 'python3-numpy',
                                                        'python3-setuptools', 'python3-crcmod',
                                                        'python3-requests', 'python3-dateutil',
