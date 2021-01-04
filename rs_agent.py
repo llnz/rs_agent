@@ -64,7 +64,7 @@ class RunCommand(protocol.ProcessProtocol):
         if reason.value.exitCode == 0:
             self.defered.callback((reason.value.exitCode, b''.join(self._out), b''.join(self._err)))
         else:
-            self.defered.errback((reason.value.exitCode, b''.join(self._out), b''.join(self._err)))
+            self.defered.errback(Exception((reason.value.exitCode, b''.join(self._out), b''.join(self._err))))
 
 class ManagementInterface(pb.Referenceable):
     '''Interface provided to server to have it manage this device'''
